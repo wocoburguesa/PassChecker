@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if score[1] == 1 %}
+  <p class=error> {{ score[0] }}
+{% elif score[1] == 2 %}
+  <p class=badpass> {{ score[0] }}
+{% elif score[1] == 3 %}
+  <p class=goodpass> {{ score[0] }}
+{% else %}
+  <p class=strongpass> {{ score[0] }}
+{% endif %}
+{% endblock %}
