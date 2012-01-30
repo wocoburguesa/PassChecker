@@ -41,57 +41,67 @@ def rating_function_code(username, password):
 def rating_function_score(username, password):
     score = 0
     if len(password) < 4:
+        #-100 es TooShortPassword
         return -100
     elif password == username:
+        #0 asegura TooShortPassword
         return 0
     
     score += len(password) * 4
+    
     checked = []
+    #Por cada char le resta al puntaje el número de veces que se repite
+    #más de una vez
     for char in password:
         if char not in checked:
             score -= password.count(char) - 1
             checked.append(char)
 
+    #SI hay 3 números, +5 ptos.
     num_count = 0
+    added = False
     for char in password:
         try:
             if int(char) in range(10):
                 num_count += 1
         except ValueError:
             pass
-        if num_count == 3:
+        if num_count == 3 and not added:
             score += 5
-            break
+            added = True
 
+    #Si hay 2 caracteres especiales, +5
     specchar_count = 0
+    added = False
     for char in password:
         if is_spec_char(char):
             specchar_count += 1
-        if specchar_count == 2:
+        if specchar_count == 2 and not added:
             score += 5
-            break
+            added = True
 
-    if not password.islower() and not password.isupper():
+    #Hay mayúsculas y minúsculas
+    if not password.lower() == password
+    and not password.upper() == password:
         score += 10
 
-    if not password.isdigit() and not password.isalpha():
+    #Hay números y letras
+    if num_count > 0 and not num_count + specchar_count == len(password):
         score += 15
 
+    #Hay caracteres especiales y números
     if specchar_count > 0 and num_count > 0:
         score += 15
 
-    has_normal_char = False
-    for char in password:
-        if not is_spec_char(char):
-            has_normal_char = True
-            break
-
-    if has_normal_char and specchar_count > 0:
+    #Hay caracteres normales y especiales
+    if specchar_count > 0 not num_count + specchar_count == len(password):
         score += 15
 
+    #Si sólo es caracteres
     if password.isalpha():
         score -= 10
 
+    #Si sólo es números
     if password.isdigit():
         score -= 10
 
