@@ -1,3 +1,4 @@
+# -- coding: utf-8 --
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
     abort, render_template, flash
@@ -81,7 +82,7 @@ def rating_function_score(username, password):
             added = True
 
     #Hay mayúsculas y minúsculas
-    if not password.lower() == password
+    if not password.lower() == password \
     and not password.upper() == password:
         score += 10
 
@@ -94,7 +95,7 @@ def rating_function_score(username, password):
         score += 15
 
     #Hay caracteres normales y especiales
-    if specchar_count > 0 not num_count + specchar_count == len(password):
+    if specchar_count > 0 and not num_count + specchar_count == len(password):
         score += 15
 
     #Si sólo es caracteres
